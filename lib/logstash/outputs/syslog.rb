@@ -210,6 +210,7 @@ class LogStash::Outputs::Syslog < LogStash::Outputs::Base
       socket = TCPSocket.new(@host, @port)
       if ssl?
         socket = OpenSSL::SSL::SSLSocket.new(socket, @ssl_context)
+        socket.sync_close = true
         begin
           socket.connect
         rescue OpenSSL::SSL::SSLError => ssle
